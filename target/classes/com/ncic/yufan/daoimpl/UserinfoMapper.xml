@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper	namespace="com.ncic.yufan.dao.UserinfoDao">
+	<resultMap type="Userinfo" id="UserinfoResultMap">
+		<id property="uId" column="u_id"/>
+		<result property="uStdname" column="u_stdname"/>
+		<result property="uName" column="u_name"/>
+		<result property="uAccount" column="u_account"/>
+		<result property="uPassword" column="u_password"/>
+		<result property="uQqnumber" column="u_qqnumber"/>
+		<result property="uSubtime" column="u_subtime"/>
+		<association property="subjectInfonation" javaType="SubjectInfonation">
+			<id property="sId" column="s_id"/>
+			<result property="sPlatform" column="s_platform"/>
+			<result property="sSubject" column="s_subject"/>
+			<result property="sMark" column="s_mark"/>
+			<result property="sSubtime" column="s_subtime"/>
+		</association>
+	</resultMap>
+	
+	<select id="queryUserinfoBydesc" resultMap="UserinfoResultMap">
+		select * from ncic_userinfo order by u_subtime desc
+	</select>
+		<select id="queryUserinfoByasc" resultMap="UserinfoResultMap">
+		select * from ncic_userinfo order by u_subtime asc
+	</select>
+	<select id="queryUserinfoBystdName" resultMap="UserinfoResultMap">
+		select * from ncic_userinfo where u_stdname = #{uStdname}
+	</select>
+	<insert id="insertUserinfo">
+		insert into ncic_userinfo(u_stdname,u_name,u_account,u_password,u_qqnumber,u_subtime)
+		value(#{uStdname},#{uName},#{uAccount},#{uPassword},#{uQqnumber},#{uSubtime})
+	</insert>
+	<update id="updataUserinfo">
+		update ncic_userinfo set u_stdname=#{uStdname}, u_name=#{uName}, u_account = #{uAccount}, u_password= #{uPassword}, u_qqnumber=#{uQqnumber},
+			u_subtime=#{uSubtime}
+			where u_id = #{uId}
+	</update>
+	<delete id="deleteUserinfoById">
+		delete from ncic_userinfo
+		 where u_id = #{uId}
+	</delete>
+</mapper>

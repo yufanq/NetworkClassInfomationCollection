@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+ 
+	<package name="d" extends="struts-default" namespace="/user">
+			<global-results>
+			<result name="error">
+				/index.jsp
+			</result>
+		</global-results>	
+	
+		<action name="listForm" method="listForm" class="com.ncic.yufan.action.UserinfoAction">
+			<result name="success" >/user/form.jsp</result>
+		</action>
+		<action name="addUserinfo" method="addUserinfo" class="com.ncic.yufan.action.UserinfoAction">
+		</action>
+	</package>
+	<package name="form" extends="struts-default" namespace="/user">
+		<action name="submitUserSubForm" method="submitUserSubForm" class="com.ncic.yufan.action.InfonationAction">
+		</action>
+	</package>
+	<package name="admin" extends="struts-default" namespace="/admin">
+		<interceptors>
+			<interceptor name="checkAdminLogin" class="com.ncic.yufan.interceptor.adminInterceptor"></interceptor>
+			<interceptor-stack name="check">
+				<interceptor-ref name="checkAdminLogin"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="check"></default-interceptor-ref>	
+		<global-results>
+			<result name="adminLoginError">/admin/adminlogin.jsp</result>
+		</global-results>
+		<action name="loginAdmin" method="loginAdmin" class="com.ncic.yufan.action.AdminAction">
+			<result name="success">/admin/index.jsp</result>
+			<result name="login">/admin/adminlogin.jsp</result>
+		</action>
+		<action name="queryUserinfo" method="queryUserinfo" class="com.ncic.yufan.action.AdminAction">
+			<result name="success">/admin/usershow.jsp</result>
+			<result name="error">/admin/index.jsp</result>
+		</action>
+		<action name="loginOut" method="loginOut" class="com.ncic.yufan.action.AdminAction">
+			<result name="error">/admin/adminlogin.jsp</result>
+		</action>
+		<action name="changeTable" method="changeTable" class="com.ncic.yufan.action.AdminAction">
+		</action>
+		
+		<action name="removeUesrinfo" method="removeUesrinfo" class="com.ncic.yufan.action.AdminAction">
+		</action>
+		<action name="querySubjectInfonationByplatform" method="querySubjectInfonationByplatform" class="com.ncic.yufan.action.AdminAction">
+			<result name="success">/admin/userbyshow.jsp</result>
+			<result name ="error">/admin/index.jsp</result>
+		</action>
+		<action name="modSubjectInfonation" method="modSubjectInfonation" class="com.ncic.yufan.action.AdminAction">
+		</action>
+		<action name="querySubjectInfonationBySubjectAndPlatform" method="querySubjectInfonationBySubjectAndPlatform" class="com.ncic.yufan.action.AdminAction">
+			<result name="success">/admin/userbyshow.jsp</result>
+		</action>
+		<action name="removeSubjectInfonation" method="removeSubjectInfonation" class="com.ncic.yufan.action.AdminAction">
+		</action>
+		<action name="modUserinfo" method="modUserinfo" class="com.ncic.yufan.action.AdminAction">
+		</action>
+	
+	</package>
+</struts>

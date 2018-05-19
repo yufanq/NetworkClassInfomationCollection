@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper	namespace="com.ncic.yufan.dao.AdminDao">
+	<resultMap type="Admin" id="AdminResultMap">
+		<id property="aid" column="a_id"/>
+		<result property="aname" column="a_name"/>
+		<result property="apassword" column="a_password"/>
+	</resultMap>
+	<select id="selectAdminByNameAndPassword" resultMap="AdminResultMap">
+		select * from ncic_admin where a_name=#{name} and a_password=#{password} 
+	</select>
+</mapper>

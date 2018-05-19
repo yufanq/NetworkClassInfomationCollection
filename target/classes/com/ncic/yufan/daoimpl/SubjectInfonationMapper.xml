@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper	namespace="com.ncic.yufan.dao.SubjectInfonationDao">
+	<resultMap type="SubjectInfonation" id="SubjectInfonationResultMap">
+		<id property="sId" column="s_id"/>
+		<result property="sPlatform" column="s_platform"/>
+		<result property="sSubject" column="s_subject"/>
+		<result property="sMark" column="s_mark"/>
+		<result property="sSubtime" column="s_subtime"/>
+		<association property="userinfo" javaType="Userinfo">
+			<id property="uId" column="u_id"/>
+			<result property="uStdname" column="u_stdname"/>
+			<result property="uName" column="u_name"/>
+			<result property="uAccount" column="u_account"/>
+			<result property="uPassword" column="u_password"/>
+			<result property="uQqnumber" column="u_qqnumber"/>
+			<result property="uSubtime" column="u_subtime"/>
+		</association>
+	</resultMap>
+	<insert id="insertSubjectInfonation">
+		insert into ncic_subject_infonation(u_id,s_platform,s_subject,s_mark,s_subtime)
+			value(#{userinfo.uId},#{sPlatform},#{sSubject},#{sMark},#{sSubtime})
+	</insert>
+	<delete id="deleteSubjectInfonation">
+		delete from ncic_subject_infonation
+			where s_id = #{sId}
+	</delete>
+	<update id="updataSubjectInfonation">
+		update ncic_subject_infonation set s_platform=#{sPlatform},s_subject=#{sSubject},s_mark=#{sMark},
+			s_subtime=#{sSubtime},u_id=#{userinfo.uId}
+			where s_id=#{sId}
+	</update>
+	<sql id="findAll">
+	select s.*,u.u_stdname,u.u_name from ncic_subject_infonation s,ncic_userinfo u
+			
+	</sql>
+	<select id="findSubjectInfonation" resultMap="SubjectInfonationResultMap">
+		<include refid="findAll"></include>where s.u_id = u.u_id 
+	</select>
+	<select id="findSubjectInfonationBySubject" resultMap="SubjectInfonationResultMap">
+		<include refid="findAll"></include>
+		<where>
+			s.u_id = u.u_id
+			<if test="sSubject != null">
+			and s_subject like '%${sSubject}%' 
+			</if>
+			<if test="sPlatform != null">
+			 and s_platform = #{sPlatform}
+			</if>
+		</where>
+	
+	</select>
+	<select id="findSubjectInfonationByPlatform" resultMap="SubjectInfonationResultMap">
+		<include refid="findAll"></include>where s.u_id = u.u_id  and s_platform = #{sPlatform}
+	</select>
+	<select id="findSubjectInfonationById" resultMap="SubjectInfonationResultMap">
+		select s.*,u.* from ncic_subject_infonation s,ncic_userinfo u
+			where s.u_id = u.u_id and s_id = #{sId}
+	</select>
+</mapper>

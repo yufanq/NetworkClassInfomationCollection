@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+
+<configuration>
+		<typeAliases>
+	<!-- 别名		<typeAlias type="com.yufan.entity.User" alias="User"/> -->
+			<typeAlias type="com.ncic.yufan.entity.Userinfo" alias="Userinfo"/>
+			<typeAlias type="com.ncic.yufan.entity.Admin" alias="Admin"/>
+			<typeAlias type="com.ncic.yufan.entity.SubjectInfonation" alias="SubjectInfonation"/>
+		</typeAliases>
+</configuration>
